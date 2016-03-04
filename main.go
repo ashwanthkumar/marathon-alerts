@@ -28,6 +28,7 @@ var alertSuppressDuration time.Duration
 
 // Slack flags
 var slackWebhooks string
+var slackProxy string
 var slackChannel string
 var slackOwners string
 var pidFile string
@@ -71,6 +72,7 @@ func main() {
 	var notifiers []Notifier
 	slack := Slack{
 		Webhook: slackWebhooks,
+		Proxy: 	 slackProxy,
 		Channel: slackChannel,
 		Owners:  slackOwners,
 	}
@@ -107,6 +109,7 @@ func defineFlags() {
 
 	// Slack flags
 	flag.StringVar(&slackWebhooks, "slack-webhook", "", "Comma list of Slack webhooks to post the alert")
+	flag.StringVar(&slackProxy, "slack-proxy", "", "HTTP proxy for accessing your slack webhooks")
 	flag.StringVar(&slackChannel, "slack-channel", "", "#Channel / @User to post the alert (defaults to webhook configuration)")
 	flag.StringVar(&slackOwners, "slack-owner", "", "Comma list of owners who should be alerted on the post")
 }
