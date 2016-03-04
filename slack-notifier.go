@@ -9,6 +9,7 @@ import (
 
 type Slack struct {
 	Webhook string
+	Proxy string
 	Channel string
 	Owners  string
 }
@@ -46,9 +47,10 @@ func (s *Slack) Notify(check AppCheck) {
 		[]slack.Attachment{attachment})
 
 	webhooks := strings.Split(GetString(check.Labels, "alerts.slack.webhook", s.Webhook), ",")
+	proxy := strings.Split(GetString(check.Labels, "alerts.slack.proxy", s.Webhook), ",")
 
 	for _, webhook := range webhooks {
-		err := slack.Send(webhook, payload)
+		err := slack.Send(webhook, proxy, payload)
 		if err != nil {
 			fmt.Printf("Unexpected Error - %v", err)
 		}
