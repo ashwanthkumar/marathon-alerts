@@ -47,7 +47,7 @@ func (s *Slack) Notify(check AppCheck) {
 		[]slack.Attachment{attachment})
 
 	webhooks := strings.Split(GetString(check.Labels, "alerts.slack.webhook", s.Webhook), ",")
-	proxy := strings.Split(GetString(check.Labels, "alerts.slack.proxy", s.Webhook), ",")
+	proxy := GetString(check.Labels, "alerts.slack.proxy", s.Proxy)
 
 	for _, webhook := range webhooks {
 		err := slack.Send(webhook, proxy, payload)
