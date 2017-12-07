@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"net/http"
+	"io/ioutil"
+    "strconv"
+    "log"
 
 	maps "github.com/ashwanthkumar/golang-utils/maps"
 	"github.com/gambol99/go-marathon"
@@ -19,8 +23,10 @@ func (h *AppHealth) Name() string {
 //  and Check for 200 status code
 func (h *AppHealth) Check(app marathon.Application) AppCheck {
 	host := maps.GetString(app.Labels, "router.hosts", "notDefined")
-	host_path := app.HealthChecks[0].path
-	host_url = strings.Join("http://", host, host_path)
+    host_path  := app.HealthChecks[0].Path
+	host_url := strings.Join([]string{"http://", host, host_path}, "")
+    result := Pass
+    message := fmt.Sprintf("HTTP Status OK!!")
 
 	resp, err := http.Get(host_url)
 	if err != nil {
@@ -36,17 +42,16 @@ func (h *AppHealth) Check(app marathon.Application) AppCheck {
 
 
 	if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
-		result =: Pass
-		fmt.Println("HTTP Status OK!")
+		result = Pass
 	} else {
 		result = Critical
-		message = fmt.Println("HTTP Response Status: " + strconv.Itoa(resp.StatusCode))
+		message = fmt.Sprintf("HTTP Response Status: ,  " + strconv.Itoa(resp.StatusCode), responseString)
 	}
 
 	return AppCheck{
 		App:       app.ID,
 		Labels:    app.Labels,
-		CheckName: n.Name(),
+		CheckName: h.Name(),
 		Result:    result,
 		Message:   message,
 		Timestamp: time.Now(),
