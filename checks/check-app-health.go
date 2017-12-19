@@ -30,23 +30,22 @@ func (h *AppHealth) Check(app marathon.Application) AppCheck {
 
 	resp, err := http.Get(hostURL)
 	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	responseString := string(body)
-
-	if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
-		result = Pass
+		log.Println(log.Ldate|log.Ltime, "ERROR:", err)
 	} else {
-		result = Critical
-		message = fmt.Sprintf("HTTP Response Status: ,  "+strconv.Itoa(resp.StatusCode), responseString)
-	}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Println(log.Ldate|log.Ltime, "ERROR:", err)
+		}
+		responseString := string(body)
 
+		if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
+			result = Pass
+		} else {
+			result = Critical
+			message = fmt.Sprintf("HTTP Response Status: ,  "+strconv.Itoa(resp.StatusCode), responseString)
+		}
+	}
 	return AppCheck{
 		App:       app.ID,
 		Labels:    app.Labels,
