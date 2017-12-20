@@ -22,7 +22,9 @@ func (h *AppHealth) Name() string {
 
 // Check App health status of App Endpoint by reading router.hosts
 func (h *AppHealth) Check(app marathon.Application) AppCheck {
-	host := maps.GetString(app.Labels, "router.hosts", "notDefined")
+	hostList := maps.GetString(app.Labels, "router.hosts", "notDefined")
+	hostSlice := strings.Split(hostList, ":")
+	host := hostSlice[0]
 	hostPath := app.HealthChecks[0].Path
 	hostURL := strings.Join([]string{"http://", host, hostPath}, "")
 	result := Pass
