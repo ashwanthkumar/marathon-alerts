@@ -45,7 +45,7 @@ func (h *AppHealth) Check(app marathon.Application) AppCheck {
 			result = Pass
 		} else {
 			result = Critical
-			message = fmt.Sprintf("HTTP Response Status: ,  "+strconv.Itoa(resp.StatusCode), responseString)
+			message = fmt.Sprintf("HTTP Response Status: %s  %s ", strconv.Itoa(resp.StatusCode), responseString)
 		}
 	}
 	return AppCheck{
