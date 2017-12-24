@@ -11,7 +11,7 @@ import (
 func TestAppHealthGetHosts(t *testing.T) {
 	check := AppHealth{}
 	appLabels := make(map[string]string)
-	appLabels["router.hosts"] = ""
+	appLabels["router.hosts"] = "zeus.prod.indix.tv"
 	s := marathon.HealthCheck{
 		GracePeriodSeconds:     180,
 		IntervalSeconds:        90,
