@@ -52,7 +52,7 @@ func (h *AppHealth) Check(app marathon.Application) AppCheck {
 		}
 	} else {
 		result = Warning
-		message = fmt.Sprintf("The healtcheck can be run for an App with HTTP endpoint!!!")
+		message = fmt.Sprintf("This healtcheck works with Marthon App with HTTP endpoint!!!")
 	}
 	return AppCheck{
 		App:       app.ID,
