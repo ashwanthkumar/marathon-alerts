@@ -35,6 +35,8 @@ func (h *AppHealth) Check(app marathon.Application) AppCheck {
 		resp, err := http.Get(hostURL)
 		if err != nil {
 			log.Println(log.Ldate|log.Ltime, "ERROR:", err)
+			result = Warning
+			message = fmt.Sprintf("Error when accessing hostURL: %s", err)
 		} else {
 			defer resp.Body.Close()
 			body, err := ioutil.ReadAll(resp.Body)
