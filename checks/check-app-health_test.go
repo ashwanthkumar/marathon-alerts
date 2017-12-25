@@ -38,7 +38,6 @@ func TestAppHealthGetHosts(t *testing.T) {
 	assert.Equal(t, "/production.zeus", appCheck.App)
 }
 
-// Test for multiple router.hosts
 func TestAppHealthGetSingleHost(t *testing.T) {
 	check := AppHealth{}
 	appLabels := make(map[string]string)
@@ -69,7 +68,6 @@ func TestAppHealthGetSingleHost(t *testing.T) {
 	assert.Equal(t, "/production.spectre", appCheck.App)
 }
 
-// check for HTTP protocol/ skip otherwise
 func TestAppHealthProtocol(t *testing.T) {
 	check := AppHealth{}
 	appLabels := make(map[string]string)
@@ -98,7 +96,6 @@ func TestAppHealthProtocol(t *testing.T) {
 	assert.Equal(t, "The healtcheck can be run for an App with HTTP endpoint!!!", appCheck.Message)
 }
 
-// Check for HTTP.Get failures/body failures
 func TestAppHTTP(t *testing.T) {
 	check := AppHealth{}
 	appLabels := make(map[string]string)
