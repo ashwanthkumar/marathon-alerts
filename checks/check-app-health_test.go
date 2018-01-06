@@ -42,7 +42,7 @@ func TestAppHealthGetSingleHost(t *testing.T) {
 	check := AppHealth{}
 	appLabels := make(map[string]string)
 	appLabels["router.hosts"] = "developer.indix.com:spectre.indix.tv"
-	s := marathon.HealthCheck{
+	 s := marathon.HealthCheck{
 		GracePeriodSeconds:     180,
 		IntervalSeconds:        90,
 		TimeoutSeconds:         30,
@@ -93,7 +93,7 @@ func TestAppHealthProtocol(t *testing.T) {
 	assert.Equal(t, Warning, appCheck.Result)
 	assert.Equal(t, "apphealth", appCheck.CheckName)
 	assert.Equal(t, "/production.autobot", appCheck.App)
-	assert.Equal(t, "The healtcheck can be run for an App with HTTP endpoint!!!", appCheck.Message)
+	assert.Equal(t, "This healtcheck works with Marthon App with HTTP endpoint!!!", appCheck.Message)
 }
 
 func TestAppHTTP(t *testing.T) {
